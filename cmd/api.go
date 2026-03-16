@@ -3,7 +3,7 @@ package main
 import {
 	"net/http"
 
-	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/v5"
 }
 
 type application struct {
@@ -12,7 +12,12 @@ type application struct {
 
 //mount
 func (app *application) mount() http.Handler {
-	r := chi.newRouter()
+	r := chi.NewRouter()
+	r.Use(middleware.Logger)
+	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("welcome"))
+	})
+	http.ListenAndServe(":3000", r)
 }
 
 //run
