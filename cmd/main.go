@@ -1,5 +1,10 @@
 package main
 
+import (
+	"log"
+	"os"
+)
+
 func main() {
 	cfg := config{
 		addr: ":8080",
