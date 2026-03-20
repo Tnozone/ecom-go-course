@@ -24,8 +24,8 @@ func (app *application) mount() http.Handler {
 	// processing should be stopped.
 	r.Use(middleware.Timeout(60 * time.Second))
 
-	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("hi"))
+	r.Get("/health", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("all good"))
 	})
 	// http.ListenAndServe(":3000", r)
 
