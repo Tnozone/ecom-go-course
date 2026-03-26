@@ -1,7 +1,7 @@
 package products
 
 import (
-	"encoding/json"
+	"github.com/Tnozone/ecom/internal/json"
 	"net/http"
 )
 
@@ -11,12 +11,14 @@ type handler struct {
 
 func NewHandler(service Service) *handler {
 	return &handler{
-		service: service:
+		service: service,
 	}
 }
 
 func (h *handler) ListProducts(w http.ResponseWriter, r *http.Request) {
-	products := []string{"Hello", "World"}
+	products := struct {
+		Products []string `json:"products"`
+	}{}
 
-	json.NewEncoder(w).Encode()
+	json.Write(w, http.StatusOK, products)
 }
