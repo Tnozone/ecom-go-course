@@ -3,13 +3,24 @@ package main
 import (
 	"log/slog"
 	"os"
+
+	"github.com/jackc/pgx/v5"
 )
 
 func main() {
 	cfg := config{
 		addr: ":8080",
-		db:   dbConfig{},
+		db: dbConfig{
+			dsn: "host=localhost user=postgres password=postgres dbname=ecom sslmode=disabled",
+		},
 	}
+
+	//Database
+	conn, err := pgx.Connect(ctx, cfg.db.dsn)
+	if err != nil {
+		return err
+	}
+	defer conn.Close(ctx)
 
 	api := application{
 		config: cfg,
