@@ -30,7 +30,7 @@ func (app *application) mount() http.Handler {
 	})
 	// http.ListenAndServe(":3000", r)
 
-	productService := products.NewService()
+	productService := products.NewService(repo.New(app.db))
 	productHandler := products.NewHandler(productService)
 	r.Get("/products", productHandler.ListProducts)
 
@@ -55,7 +55,7 @@ func (app *application) run(h http.Handler) error {
 type application struct {
 	config config
 	// logger
-	// db driver
+	db *pgx.Conn
 }
 
 type config struct {
