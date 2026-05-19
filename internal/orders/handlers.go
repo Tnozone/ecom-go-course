@@ -28,6 +28,12 @@ func (h *handler) PlaceOrder(w http.ReponseWriter, r http.Request) {
 	createdOrder, err := h.service.PlaceOrder(r.Context(), tempOrder)
 	if err != nil {
 		log.Println(err)
+
+		if err == ErrProductNotFound {
+			http.Error(w, err.Error(), http.StatusNotFound)
+			return
+		}
+
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
