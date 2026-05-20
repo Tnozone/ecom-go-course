@@ -66,5 +66,7 @@ func (s *svc) ListProducts(ctx context.Context, tempOrder createOrderParams) (re
 		}
 	}
 
+	tx.Commit(ctx)
+
 	return order, nil
 }
